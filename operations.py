@@ -24,6 +24,7 @@ class AvgPool2d(nn.Module):
     self.op = nn.AvgPool2d(3, stride=stride, padding=1, count_include_pad=False)
     self.count = 0
     self.pre_grads = []
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -34,6 +35,7 @@ class MaxPool2d(nn.Module):
     self.op = nn.MaxPool2d(3, stride=stride, padding=1)
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
     
   def forward(self, x):
     return self.op(x)
@@ -61,6 +63,7 @@ class DilConv3(nn.Module):
       )
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -77,6 +80,7 @@ class DilConv5(nn.Module):
       )
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -97,6 +101,7 @@ class SepConv3(nn.Module):
       )
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -117,6 +122,7 @@ class SepConv5(nn.Module):
       )
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -136,6 +142,7 @@ class SepConv7(nn.Module):
       )
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     return self.op(x)
@@ -155,6 +162,7 @@ class Zero(nn.Module):
     self.stride = stride
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     if self.stride == 1:
@@ -171,6 +179,7 @@ class FactorizedReduce(nn.Module):
     self.bn = nn.BatchNorm2d(C_out, affine=affine)
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
 
   def forward(self, x):
     x = self.relu(x)
@@ -190,6 +199,7 @@ class Conv7(nn.Module):
 
     self.count = 0
     self.pre_grads=[]
+    self.avg = 0
   
   def forward(self, x):
     return self.op(x)

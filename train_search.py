@@ -91,10 +91,7 @@ def main():
   model = Network(args.init_channels, CIFAR_CLASSES, args.layers, criterion)
   model = model.cuda()
   logging.info("param size = %fMB", utils.count_parameters_in_MB(model))
-  #checkpoint = torch.load("search-cifar100-0.3-20-20230117-082928/checkpoint.pth.tar")
-  #model.load_state_dict(checkpoint['state_dict'])
-  #model.set_arch_param(checkpoint['alpha'])
-
+  
   optimizer = torch.optim.SGD(
       model.parameters(),
       args.learning_rate,
@@ -208,18 +205,13 @@ def check_grads_cosine(m):
 
     i = 0
     true_i =0
-    temp =0 
-    
-    #每个算子内部的遍历
-    # print(m.__class__.__name__)
+    temp =0  
     
     for param in m.parameters():
       if param.requires_grad and param.grad is not None:
         g = param.grad.detach().cpu()
         if len(g)!=0:
           temp += torch.cosine_similarity(g, m.pre_grads[i], dim=0).mean()
-          # import pdb
-          # pdb.set_trace()
           true_i += 1
         i += 1
         
@@ -229,24 +221,13 @@ def check_grads_cosine(m):
     
     m.avg += sim_avg
     m.count += 1
-    #if m.avg / m.count < 0.3 and m.count : #dissimiliar
     if m.count >= 20 :
       logging.info("below 0.3 %s %f %d", m.__class__.__name__, m.avg / m.count ,m.count)        
     else: 
       m.count = 0
       m.avg=0
       
-    # if nparams > 0 and diff >= nparams * args.patience:
-    #     m.count += 1
-    #     logging.info("over %f %s %f %d",args.patience, m.__class__.__name__, diff/nparams,m.count)
-    #     if m.count >= args.count:
-    #       freeze(m)
-    # else:
-    #     m.count = 0
-    
-    #writer.add_scalar('train/'+m.__class__.__name__, diff/nparams, cur_step)
-
-
+ 
 
 
 

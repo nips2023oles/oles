@@ -52,7 +52,7 @@ class ReLUConvBN(nn.Module):
   def forward(self, x):
     return self.op(x)
 
-class DilConv3(nn.Module):  
+class DilConv3(nn.Module):
   def __init__(self, C_in, C_out, kernel_size, stride, padding, dilation, affine=True):
     super(DilConv3, self).__init__()
     self.op = nn.Sequential(
@@ -127,7 +127,7 @@ class SepConv5(nn.Module):
   def forward(self, x):
     return self.op(x)
 
-class SepConv7(nn.Module): 
+class SepConv7(nn.Module):
   def __init__(self, C_in, C_out, kernel_size, stride, padding, affine=True):
     super(SepConv7, self).__init__()
     self.op = nn.Sequential(
@@ -175,7 +175,7 @@ class FactorizedReduce(nn.Module):
     assert C_out % 2 == 0
     self.relu = nn.ReLU(inplace=False)
     self.conv_1 = nn.Conv2d(C_in, C_out // 2, 1, stride=2, padding=0, bias=False)
-    self.conv_2 = nn.Conv2d(C_in, C_out // 2, 1, stride=2, padding=0, bias=False) 
+    self.conv_2 = nn.Conv2d(C_in, C_out // 2, 1, stride=2, padding=0, bias=False)
     self.bn = nn.BatchNorm2d(C_out, affine=affine)
     self.count = 0
     self.pre_grads=[]
